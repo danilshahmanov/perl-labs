@@ -1,83 +1,105 @@
-#!/usr/bin/perl
 use strict;
 use warnings;
 
-sub main {
-    my @masA = get_array('A');
-    my @masB = get_array('B');
 
-    print_arrays(\@masA, \@masB);
+my @masA = get_array('A');
+my @masB = get_array('B');
 
-    my @merged = merge_arrays(\@masA, \@masB);
-    print "\nОбъединенный массив: @merged\n";
+# Передача массива по ссылке
+print_arrays(\@masA, \@masB);
 
-    my @intersection = intersect_arrays(\@masA, \@masB);
-    print "\nПересечение: @intersection\n";
+my @merged = merge_arrays(\@masA, \@masB);
+print "\nОбъединенный массив: @merged\n";
 
-    my @sym_diff = symmetric_difference(\@masA, \@masB);
-    print "\nРезультат симметричной разности: @sym_diff\n";
+my @intersection = intersect_arrays(\@masA, \@masB);
+print "\nПересечение: @intersection\n";
 
-    my @diffAB = difference(\@masA, \@masB);
-    print "\nРазность A-B: @diffAB\n";
+my @sym_diff = symmetric_difference(\@masA, \@masB);
+print "\nРезультат симметричной разности: @sym_diff\n";
 
-    my @diffBA = difference(\@masB, \@masA);
-    print "\nРазность B-A: @diffBA\n";
+my @diffAB = difference(\@masA, \@masB);
+print "\nРазность A-B: @diffAB\n";
 
-    print "Длина массива A: " . scalar(@masA) . "\n";
-    print "Длина массива B: " . scalar(@masB) . "\n";
+my @diffBA = difference(\@masB, \@masA);
+print "\nРазность B-A: @diffBA\n";
 
-    my @masA_rearranged = rearrange_array(\@masA);
-    print "\nМассив A после перестановок:\n @masA_rearranged\n";
+print "Длина массива A: " . scalar(@masA) . "\n";
+print "Длина массива B: " . scalar(@masB) . "\n";
 
-    my @masC = merge_arrays_and_print(\@masA, \@masB);
-    print "\nМассив C:\n @masC\n";
-}
+my @masA_rearranged = rearrange_array(\@masA);
+print "\nМассив A после перестановок:\n @masA_rearranged\n";
+
+my @masC = merge_arrays_and_print(\@masA, \@masB);
+print "\nМассив C:\n @masC\n";
+
 
 sub get_array {
     my ($name) = @_;
     my @array;
     print "Введите массив $name (пустая строка для завершения):\n";
+
+    # last = break
     while (1) {
         chomp(my $input = <STDIN>);
-        last if $input eq '';
+        if ($input eq ''){
+             last; 
+        }
         push @array, int($input);
     }
     return @array;
 }
 
 sub print_arrays {
+    # Получение ссылки на массив
     my ($masA_ref, $masB_ref) = @_;
+    # Разименование ссылки для получения массива
     print "\nМассив A: @$masA_ref\n";
     print "\nМассив B: @$masB_ref\n";
 }
 
 # Функция для объединения массивов
 sub merge_arrays {
+    # Получение ссылки на массив
     my ($masA_ref, $masB_ref) = @_;
+    # Вспомогательный хэш 
     my %seen;
     my @merged = (@$masA_ref, @$masB_ref);
-    return grep { !$seen{$_}++ } @merged;
+
+    # grep - Создание нового массива на основе переданного 
+    return grep { !$seen{$_} } @merged;
 }
 
 # Функция для пересечения двух массивов
 sub intersect_arrays {
+     # Получение ссылки на массив
     my ($masA_ref, $masB_ref) = @_;
+    # Заполняем хэш массивом B со значением по умолчанию 1
     my %seen = map { $_ => 1 } @$masB_ref;
+    # Если в хэше присутствует элемент из A, то добавляем в итоговый массив 
     return grep { $seen{$_} } @$masA_ref;
 }
 
 # Функция для симметричной разности
 sub symmetric_difference {
     my ($masA_ref, $masB_ref) = @_;
+
+     # Заполняем хэш массивом A со значением по умолчанию 1
     my %seenA = map { $_ => 1 } @$masA_ref;
     my %seenB = map { $_ => 1 } @$masB_ref;
 
+    # Итоговый массив
     my @sym_diff;
+
     foreach my $item (@$masA_ref) {
-        push @sym_diff, $item unless $seenB{$item};
+        if(!$seenB{$item}){
+            push @sym_diff, $item;
+        }
     }
+
     foreach my $item (@$masB_ref) {
-        push @sym_diff, $item unless $seenA{$item};
+        if(!$seenA{$item}){
+            push @sym_diff, $item;
+        }
     }
     return @sym_diff;
 }
@@ -85,7 +107,9 @@ sub symmetric_difference {
 # Функция для разности двух массивов
 sub difference {
     my ($masA_ref, $masB_ref) = @_;
+    # Заполняем хэш массивом B со значением по умолчанию 1
     my %seenB = map { $_ => 1 } @$masB_ref;
+    # Если в массиве B нет элемента, то добавляем в итоговый массив
     return grep { !$seenB{$_} } @$masA_ref;
 }
 
@@ -93,39 +117,37 @@ sub difference {
 sub rearrange_array {
     my ($mas_ref) = @_;
     my @mas = @$mas_ref;
-    my $maxA = $#mas;
-    my $i = 1;
-    while ($i <= $maxA) {
+
+    for (my $i = 1; $i < @mas; $i += 2) {
         @mas[$i, $i - 1] = @mas[$i - 1, $i];
-        $i += 2;
     }
+
     return @mas;
 }
 
-# Объединение массивов C
+# Объединение массивов
+# элементы с четными индексами взяты из первого массива, а 
+# элементы с нечетными индексами — из второго
 sub merge_arrays_and_print {
-    my ($mas1_ref, $mas2_ref) = @_;
+     my ($mas1_ref, $mas2_ref) = @_;
     my @mas1 = @$mas1_ref;
     my @mas2 = @$mas2_ref;
     my @mas3;
 
-    my $maxA = scalar @mas1;
-    my $maxB = scalar @mas2;
-    my $max_length = $maxA > $maxB ? 2 * $maxA : 2 * $maxB;
+    my $max_length = @mas1 > @mas2 ? 2 * @mas1 : 2 * @mas2;
 
     my ($a, $b) = (0, 0);
 
     for (my $i = 0; $i < $max_length; $i++) {
-        if ($i % 2 == 0) {
-            push @mas3, $mas2[$a] // ".";
+        if ($i % 2 == 0 && $a <= @mas2) {
+            push @mas3, $mas2[$a];
             $a++;
         } else {
-            push @mas3, $mas1[$b] // ".";
-            $b++;
+            if($b <= @mas1){
+                push @mas3, $mas1[$b];
+                $b++;
+            }          
         }
     }
     return @mas3;
 }
-
-# Запуск основной функции
-main();
