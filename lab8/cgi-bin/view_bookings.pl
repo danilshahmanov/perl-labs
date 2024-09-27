@@ -58,10 +58,6 @@ print $cgi->header(-type => 'text/html', -charset => 'UTF-8');
 print $cgi->start_html('Просмотр всех номеров и броней');
 print $cgi->h1('Просмотр всех номеров и броней');
 
-# Кнопка "На главную" наверху страницы
-print $cgi->a({-href => '/index.html'}, 'На главную');
-print $cgi->br;
-
 # Таблица всех занятых номеров
 print "<h2>Занятые номера</h2>";
 print "<table border='1'>";
@@ -105,12 +101,21 @@ foreach my $type (keys %all_rooms_constants) {
 }
 print "</table>";
 
+
+print "<br>";
+
+# Кнопка "На главную" наверху страницы
+print $cgi->a({-href => '/index.html'}, 'На главную');
+
 print "<br>";
 
 # Кнопка для очистки броней
 print $cgi->button(
     -value => 'Очистить брони',
-    -onclick => 'if (confirm("Вы уверены, что хотите очистить все брони?")) { window.location.href="/path/to/your/clear_bookings.pl"; }'
+    -onclick => 'if (confirm("Вы уверены, что хотите очистить все брони?")) { window.location.href="/cgi-bin/clear_bookings.pl"; }'
 );
+print "<br>";
 
+# Кнопка "На главную" внизу страницы
+print $cgi->a({-href => '#top'}, 'На верх страницы');
 print $cgi->end_html;

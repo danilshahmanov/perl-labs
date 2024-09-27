@@ -59,4 +59,5 @@ print $cgi->h1('Спасибо!');
 print $cgi->p("Вы забронировали номер $room_number ($room_type).");
 print $cgi->p("На имя: $name");
 print $cgi->a({-href => '/cgi-bin/new_booking.pl'}, 'Забронировать еще один номер');
+print $cgi->a({-href => '/index.html'}, 'На главную');
 print $cgi->end_html;

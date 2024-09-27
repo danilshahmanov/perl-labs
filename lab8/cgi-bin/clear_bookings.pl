@@ -32,4 +32,7 @@ print $rfh join("\n", @rooms_data);  # Записываем все номера
 close $rfh;
 
 # Перенаправление на главную страницу
-print $cgi->header(-status => '302 Found', -Location => '/index.html');
+print $cgi->header(-type => 'text/html', -charset => 'UTF-8');
+print $cgi->start_html('Брони очищены');
+print $cgi->a({-href => '/index.html'}, 'На главную');
+print $cgi->end_html;
