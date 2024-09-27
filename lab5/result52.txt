@@ -1,0 +1,18 @@
+
+Каталог C:\Users\Danil\Desktop\perl\lab6:
+arabian_numbers.txt 52 byte 19.9.2024 6:44 read = true write = true
+converted_dos866.txt 45 byte 23.9.2024 16:15 read = true write = true
+converted_koi8.txt 45 byte 23.9.2024 16:15 read = true write = true
+lab61.pl 1237 byte 23.9.2024 5:49 read = true write = true
+lab62.pl 1173 byte 23.9.2024 6:10 read = true write = true
+lab63.pl 917 byte 23.9.2024 6:15 read = true write = true
+lab64.pl 2077 byte 23.9.2024 15:43 read = true write = true
+lab64test.txt 35 byte 23.9.2024 16:24 read = true write = true
+roman_numbers.txt 64 byte 19.9.2024 6:44 read = true write = true
+
+Каталог C:\Users\Danil\Desktop\perl\lab6/test:
+t1.txt 46 byte 23.9.2024 5:49 read = true write = true
+t2.t 38 byte 23.9.2024 5:50 read = true write = true
+
+Каталог C:\Users\Danil\Desktop\perl\lab6/test/test2:
+t1.txt 52 byte 23.9.2024 5:50 read = true write = true

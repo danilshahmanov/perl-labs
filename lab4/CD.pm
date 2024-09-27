@@ -1,9 +1,9 @@
-#!/usr/bin/perl
 use strict;
 use warnings;
 
 package CD;
 
+# Объект в виде ссылки на структуру
 sub new {
     my ($class, %args) = @_;
     my $self = {
@@ -12,6 +12,7 @@ sub new {
         year   => $args{year}   // 'Неизвестный год',
         genre  => $args{genre}  // 'Неизвестный жанр',
     };
+    # Связывние ссылки с элементами класса
     bless $self, $class;
     return $self;
 }
@@ -32,4 +33,5 @@ sub update_info {
     $self->{genre}  = $info{genre}  if defined $info{genre};
 }
 
-1;  
+# Успешная загрузка модуля класса.
+1; 

@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 use strict;
 use warnings;
 use lib '.';
@@ -82,29 +81,26 @@ sub display_collection {
     }
 }
 
-sub menu {
-    while (1) {
-        print "\nМеню:\n";
-        print "1. Создать новый CD\n";
-        print "2. Обновить информацию о CD\n";
-        print "3. Показать коллекцию\n";
-        print "4. Выйти\n";
-        print "Выберите действие: ";
-        my $choice = <STDIN>;
-        chomp($choice);
 
-        if ($choice == 1) {
-            create_cd();
-        } elsif ($choice == 2) {
-            update_cd();
-        } elsif ($choice == 3) {
-            display_collection();
-        } elsif ($choice == 4) {
-            last;
-        } else {
-            print "Неверный выбор. Пожалуйста, выберите снова.\n";
-        }
+while (1) {
+    print "\nМеню:\n";
+    print "1. Создать новый CD\n";
+    print "2. Обновить информацию о CD\n";
+    print "3. Показать коллекцию\n";
+    print "4. Выйти\n";
+    print "Выберите действие: ";
+    my $choice = <STDIN>;
+    chomp($choice);
+
+    if ($choice == 1) {
+        create_cd();
+    } elsif ($choice == 2) {
+        update_cd();
+    } elsif ($choice == 3) {
+        display_collection();
+    } elsif ($choice == 4) {
+        last;
+    } else {
+        print "Неверный выбор. Пожалуйста, выберите снова.\n";
     }
 }
-
-menu();
